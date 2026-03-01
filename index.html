@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TravelPro - Your Global Travel Network</title>
+<style>
+  :root {
+    --primary: #0a2342;
+    --accent: #e8a020;
+    --light: #f7f9fc;
+    --gradient: linear-gradient(135deg, #0a2342 0%, #1a6ea8 100%);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; color: #222; }
+
+  /* NAVBAR */
+  nav {
+    background: var(--primary);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 999;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .logo { color: #fff; font-size: 1.6rem; font-weight: 800; padding: 16px 0; }
+  .logo span { color: var(--accent); }
+  nav ul { list-style: none; display: flex; gap: 24px; }
+  nav ul a { color: #cde; text-decoration: none; font-size: 0.9rem; transition: color .2s; }
+  nav ul a:hover { color: var(--accent); }
+  .nav-btn {
+    background: var(--accent); color: #fff; border: none;
+    padding: 9px 20px; border-radius: 25px; cursor: pointer;
+    font-weight: 700; font-size: 0.9rem;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--gradient);
+    min-height: 92vh;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 60px 20px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1600') center/cover;
+    opacity: 0.18;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 800px; }
+  .hero h1 { color: #fff; font-size: 3.2rem; font-weight: 900; line-height: 1.2; margin-bottom: 20px; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { color: #c8dff0; font-size: 1.2rem; margin-bottom: 36px; }
+  .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: #fff; padding: 14px 34px;
+    border-radius: 30px; border: none; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: transform .2s, box-shadow .2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(232,160,32,0.5); }
+  .btn-outline {
+    background: transparent; color: #fff; padding: 14px 34px;
+    border-radius: 30px; border: 2px solid #fff; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: all .2s;
+  }
+  .btn-outline:hover { background: #fff; color: var(--primary); }
+
+  /* STATS */
+  .stats {
+    background: var(--accent);
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    text-align: center; padding: 30px 5%;
+  }
+  .stat h2 { font-size: 2.2rem; color: #fff; font-weight: 900; }
+  .stat p { color: rgba(255,255,255,0.85); font-size: 0.85rem; }
+
+  /* SECTION */
+  section { padding: 80px 5%; }
+  .section-title { text-align: center; margin-bottom: 50px; }
+  .section-title h2 { font-size: 2.2rem; color: var(--primary); font-weight: 800; }
+  .section-title p { color: #667; margin-top: 10px; font-size: 1rem; }
+
+  /* ROLE CARDS */
+  .roles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  .role-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 30px 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border-top: 4px solid var(--accent);
+    transition: transform .2s, box-shadow .2s;
+    cursor: pointer;
+  }
+  .role-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,0.13); }
+  .role-icon { font-size: 2.5rem; margin-bottom: 14px; }
+  .role-card h3 { color: var(--primary); font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; }
+  .role-card p { color: #556; font-size: 0.88rem; line-height: 1.6; }
+  .role-card ul { margin-top: 12px; padding-left: 18px; color: #445; font-size: 0.85rem; line-height: 1.8; }
+  .badge {
+    display: inline-block; background: #e8f4ff; color: var(--primary);
+    font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-top: 12px;
+  }
+
+  /* EARN SECTION */
+  .earn-bg { background: var(--light); }
+  .earn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .earn-card {
+    background: var(--primary);
+    color: #fff; border-radius: 16px; padding: 30px 24px; text-align: center;
+  }
+  .earn-card .big { font-size: 2.8rem; font-weight: 900; color: var(--accent); }
+  .earn-card h3 { font-size: 1rem; margin: 10px 0 6px; }
+  .earn-card p { font-size: 0.83rem; color: #aac; line-height: 1.5; }
+
+  /* HOW IT WORKS */
+  .steps { display: flex; gap: 0; position: relative; flex-wrap: wrap; justify-content: center; }
+  .step {
+    flex: 1; min-width: 180px; max-width: 200px;
+    text-align: center; padding: 20px 10px; position: relative;
+  }
+  .step-num {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--gradient); color: #fff;
+    font-size: 1.4rem; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 14px;
+    box-shadow: 0 4px 15px rgba(10,35,66,0.3);
+  }
+  .step h4 { color: var(--primary); font-weight: 700; margin-bottom: 6px; }
+  .step p { font-size: 0.82rem; color: #667; }
+
+  /* REFERRAL */
+  .referral-box {
+    background: var(--gradient); border-radius: 20px;
+    padding: 50px 40px; text-align: center; color: #fff;
+    max-width: 700px; margin: 0 auto;
+  }
+  .referral-box h2 { font-size: 2rem; font-weight: 800; margin-bottom: 14px; }
+  .referral-box p { color: #acd; font-size: 1rem; margin-bottom: 28px; }
+  .referral-link-box {
+    background: rgba(255,255,255,0.12); border-radius: 10px;
+    padding: 14px 20px; display: flex; gap: 10px; align-items: center;
+    justify-content: center; flex-wrap: wrap;
+  }
+  .referral-link-box input {
+    border: none; background: transparent; color: #fff;
+    font-size: 0.9rem; flex: 1; min-width: 200px; outline: none;
+  }
+  .copy-btn {
+    background: var(--accent); border: none; color: #fff;
+    padding: 8px 18px; border-radius: 8px; cursor: pointer; font-weight: 700;
+  }
+
+  /* REGISTER MODAL */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6); z-index: 9999;
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: #fff; border-radius: 20px; padding: 40px;
+    max-width: 480px; width: 90%; position: relative;
+  }
+  .modal h2 { color: var(--primary); font-size: 1.6rem; margin-bottom: 6px; }
+  .modal p { color: #667; font-size: 0.9rem; margin-bottom: 24px; }
+  .close-modal {
+    position: absolute; top: 16px; right: 20px;
+    font-size: 1.5rem; cursor: pointer; color: #999;
+  }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 0.85rem; color: var(--primary); font-weight: 600; margin-bottom: 5px; }
+  .form-group input, .form-group select {
+    width: 100%; padding: 10px 14px; border: 1.5px solid #dde;
+    border-radius: 8px; font-size: 0.9rem; outline: none;
+    transition: border .2s;
+  }
+  .form-group input:focus, .form-group select:focus { border-color: var(--accent); }
+  .submit-btn {
+    width: 100%; background: var(--gradient); color: #fff; border: none;
+    padding: 13px; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer;
+  }
+  .role-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .role-tab {
+    padding: 6px 14px; border-radius: 20px; font-size: 0.78rem;
+    border: 1.5px solid #dde; cursor: pointer; color: #556;
+    transition: all .2s;
+  }
+  .role-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+  /* FOOTER */
+  footer {
+    background: var(--primary); color: #aac; padding: 50px 5% 24px;
+  }
+  .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 30px; margin-bottom: 40px; }
+  .footer-col h4 { color: #fff; margin-bottom: 14px; font-size: 1rem; }
+  .footer-col p, .footer-col a { display: block; color: #889; font-size: 0.84rem; line-height: 1.9; text-decoration: none; }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; text-align: center; font-size: 0.82rem; }
+
+  /* RESPONSIVE */
+  @media(max-width:768px) {
+    .hero h1 { font-size: 2rem; }
+    .stats { grid-template-columns: repeat(2,1fr); }
+    nav ul { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">Travel<span>Pro</span></div>
+  <ul>
+    <li><a href="#roles">Who We Serve</a></li>
+    <li><a href="#earn">Earn & Refer</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#referral">Referral</a></li>
+  </ul>
+  <button class="nav-btn" onclick="openModal()">Join Free</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>The Travel Network That<br><span>Pays You to Grow</span></h1>
+    <p>Join thousands of travelers, agents, drivers, fleet owners & DMC companies.<br>Earn commissions, referrals and rewards — all in one platform.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="openModal()">🚀 Join Free Today</button>
+      <button class="btn-outline" onclick="document.getElementById('roles').scrollIntoView({behavior:'smooth'})">Explore Roles</button>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><h2>50K+</h2><p>Registered Members</p></div>
+  <div class="stat"><h2>120+</h2><p>Countries Covered</p></div>
+  <div class="stat"><h2>$2M+</h2><p>Commissions Paid</p></div>
+  <div class="stat"><h2>98%</h2><p>Satisfaction Rate</p></div>
+</div>
+
+<!-- ROLES SECTION -->
+<section id="roles">
+  <div class="section-title">
+    <h2>A Platform Built for Everyone</h2>
+    <p>Whether you travel, drive, manage fleets, or sell tours — TravelPro has your role covered.</p>
+  </div>
+  <div class="roles-grid">
+    <!-- Traveler/User -->
+    <div class="role-card" onclick="openModal('Traveler')">
+      <div class="role-icon">🧳</div>
+      <h3>Traveler / User</h3>
+      <p>Book flights, hotels, tours and transfers with ease. Earn cashback on every booking.</p>
+      <ul>
+        <li>Book packages & day tours</li>
+        <li>Earn loyalty points</li>
+        <li>Refer friends & earn ₹500/ref</li>
+        <li>Access exclusive deals</li>
+        <li>Real-time booking tracking</li>
+      </ul>
+      <span class="badge">Earn up to ₹5000/month</span>
+    </div>
+    <!-- Taxi Driver -->
+    <div class="role-card" onclick="openModal('Taxi Driver')">
+      <div class="role-icon">🚕</div>
+      <h3>Taxi Driver</h3>
+      <p>Get verified transfers from travel agents and tourists. Grow your income consistently.</p>
+      <ul>
+        <li>Airport & hotel transfers</li>
+        <li>Day tour assignments</li>
+        <li>Verified passenger bookings</li>
+        <li>Weekly payouts</li>
+        <li>Driver rating system</li>
+      </ul>
+      <span class="badge">₹800–₹2000/day avg</span>
+    </div>
+    <!-- Fleet Owner -->
+    <div class="role-card" onclick="openModal('Fleet Owner')">
+      <div class="role-icon">🚌</div>
+      <h3>Fleet Owner</h3>
+      <p>Register your vehicles — cars, vans, buses — and receive bulk bookings from agents and DMCs.</p>
+      <ul>
+        <li>Multi-vehicle dashboard</li>
+        <li>Driver management</li>
+        <li>Contract with travel agencies</li>
+        <li>Revenue analytics</li>
+        <li>Insurance integration</li>
+      </ul>
+      <span class="badge">Bulk booking priority</span>
+    </div>
+    <!-- Travel Agent -->
+    <div class="role-card" onclick="openModal('Travel Agent')">
+      <div class="role-icon">🏢</div>
+      <h3>Travel Agent</h3>
+      <p>Create and sell customized packages. Access DMC rates, ground transport, and earn referral commissions.</p>
+      <ul>
+        <li>Package builder tool</li>
+        <li>Access DMC wholesale rates</li>
+        <li>Client management CRM</li>
+        <li>Commission dashboard</li>
+        <li>Co-branded booking pages</li>
+      </ul>
+      <span class="badge">15% avg commission</span>
+    </div>
+    <!-- DMC -->
+    <div class="role-card" onclick="openModal('DMC Company')">
+      <div class="role-icon">🌍</div>
+      <h3>DMC Company</h3>
+      <p>Destination Management Companies — list your services, get bookings from global agents.</p>
+      <ul>
+        <li>Showcase destination services</li>
+        <li>Accept B2B agent bookings</li>
+        <li>Manage ground ops & guides</li>
+        <li>Multi-currency invoicing</li>
+        <li>API access for agents</li>
+      </ul>
+      <span class="badge">Verified DMC badge</span>
+    </div>
+    <!-- Inbound Agent -->
+    <div class="role-card" onclick="openModal('Inbound Travel Agent')">
+      <div class="role-icon">✈️</div>
+      <h3>Inbound Travel Agent</h3>
+      <p>Receive tourists from abroad. Partner with global outbound agents and DMCs for steady business.</p>
+      <ul>
+        <li>International agent network</li>
+        <li>Visa & documentation tips</li>
+        <li>Local tour packages</li>
+        <li>24/7 support for tourists</li>
+        <li>Real-time chat with agents</li>
+      </ul>
+      <span class="badge">Global partner network</span>
+    </div>
+    <!-- Outbound Agent -->
+    <div class="role-card" onclick="openModal('Outbound Travel Agent')">
+      <div class="role-icon">🗺️</div>
+      <h3>Outbound Travel Agent</h3>
+      <p>Send clients abroad. Access inbound agents, packages and earn commissions on every sale.</p>
+      <ul>
+        <li>Destination packages library</li>
+        <li>Visa filing assistance</li>
+        <li>Forex & travel insurance</li>
+        <li>Group tour management</li>
+        <li>Earn override commissions</li>
+      </ul>
+      <span class="badge">Commission on resell</span>
+    </div>
+  </div>
+</section>
+
+<!-- EARN SECTION -->
+<section id="earn" class="earn-bg">
+  <div class="section-title">
+    <h2>Join. Earn. Refer. Repeat.</h2>
+    <p>Multiple ways to make money on TravelPro — for every type of member.</p>
+  </div>
+  <div class="earn-grid">
+    <div class="earn-card">
+      <div class="big">₹500</div>
+      <h3>Per Referral</h3>
+      <p>Earn ₹500 every time someone joins using your link and completes their first booking.</p>
+    </div>
+    <div class="earn-card">
+      <div class="big">10%</div>
+      <h3>Booking Commission</h3>
+      <p>Agents earn 10–18% commission on every package sold through the platform.</p>
+    </div>
+    <div class="earn-card">
+      <div class="big">3X</div>
+      <h3>Loyalty Multiplier</h3>
+      <p>Active members get 3x points on bookings during festivals and peak seasons.</p>
+    </div>
+    <div class="earn-card">
+      <div class="big">∞</div>
+      <h3>Unlimited Earning</h3>
+      <p>No cap on referrals or commissions. The more you share, the more you earn.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-title">
+    <h2>How It Works</h2>
+    <p>Get started in 4 simple steps and start earning today.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h4>Sign Up Free</h4>
+      <p>Register with your email. Choose your role — traveler, agent, driver, DMC, etc.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h4>Complete Profile</h4>
+      <p>Add your details, upload documents (for business roles) and get verified.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h4>Book or Sell</h4>
+      <p>Start booking trips, listing services or selling packages immediately after approval.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h4>Earn & Refer</h4>
+      <p>Share your unique referral link and earn on every booking you or your network makes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- REFERRAL SECTION -->
+<section id="referral" style="background:var(--light)">
+  <div class="referral-box">
+    <h2>🎉 Your Referral Link</h2>
+    <p>Share this link with friends, clients or partners. Earn ₹500 per successful signup!</p>
+    <div class="referral-link-box">
+      <input type="text" value="https://travelpro.com/ref/YOUR_CODE" id="refLink" readonly>
+      <button class="copy-btn" onclick="copyRef()">Copy Link</button>
+    </div>
+    <p style="margin-top:16px;font-size:0.82rem;color:#99bbdd;">Login to get your personalized referral link. Payouts every Monday via bank transfer or UPI.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>TravelPro</h4>
+      <p>The complete travel business platform connecting travelers, agents, drivers and DMCs worldwide.</p>
+    </div>
+    <div class="footer-col">
+      <h4>For Businesses</h4>
+      <a href="#">Travel Agents</a>
+      <a href="#">DMC Companies</a>
+      <a href="#">Fleet Owners</a>
+      <a href="#">Inbound Agents</a>
+    </div>
+    <div class="footer-col">
+      <h4>For Individuals</h4>
+      <a href="#">Travelers</a>
+      <a href="#">Taxi Drivers</a>
+      <a href="#">Refer & Earn</a>
+      <a href="#">Loyalty Program</a>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <a href="#">Help Center</a>
+      <a href="#">Contact Us</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2025 TravelPro. All rights reserved. | Made with ❤️ for the travel industry
+  </div>
+</footer>
+
+<!-- REGISTER MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <span class="close-modal" onclick="closeModal()">✕</span>
+    <h2>Join TravelPro</h2>
+    <p>Create your free account and start earning today</p>
+    <div class="role-tabs" id="roleTabs">
+      <div class="role-tab active" onclick="selectRole(this,'Traveler')">Traveler</div>
+      <div class="role-tab" onclick="selectRole(this,'Taxi Driver')">Taxi Driver</div>
+      <div class="role-tab" onclick="selectRole(this,'Fleet Owner')">Fleet Owner</div>
+      <div class="role-tab" onclick="selectRole(this,'Travel Agent')">Travel Agent</div>
+      <div class="role-tab" onclick="selectRole(this,'DMC')">DMC</div>
+      <div class="role-tab" onclick="selectRole(this,'Inbound Agent')">Inbound</div>
+      <div class="role-tab" onclick="selectRole(this,'Outbound Agent')">Outbound</div>
+    </div>
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" placeholder="John Smith">
+    </div>
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" placeholder="john@email.com">
+    </div>
+    <div class="form-group">
+      <label>Phone Number</label>
+      <input type="tel" placeholder="+91 9876543210">
+    </div>
+    <div class="form-group">
+      <label>Referral Code (optional)</label>
+      <input type="text" placeholder="Enter referral code">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" placeholder="Create a strong password">
+    </div>
+    <button class="submit-btn" onclick="handleRegister()">🚀 Create Free Account</button>
+  </div>
+</div>
+
+<script>
+  function openModal(role) {
+    document.getElementById('modalOverlay').classList.add('active');
+    if(role) {
+      document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.role-tab').forEach(t => {
+        if(t.textContent.includes(role.split(' ')[0])) t.classList.add('active');
+      });
+    }
+  }
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+  }
+  function selectRole(el, role) {
+    document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+  }
+  function copyRef() {
+    const input = document.getElementById('refLink');
+    input.select();
+    document.execCommand('copy');
+    alert('Referral link copied!');
+  }
+  function handleRegister() {
+    alert('🎉 Welcome to TravelPro!\n\nYour account has been created. Check your email for verification.');
+    closeModal();
+  }
+  document.getElementById('modalOverlay').addEventListener('click', function(e) {
+    if(e.target === this) closeModal();
+  });
+</script>
+</body>
+</html>
